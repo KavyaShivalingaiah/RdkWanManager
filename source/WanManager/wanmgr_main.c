@@ -95,6 +95,7 @@ static void waitUntilSystemReady()
 #ifdef RBUS_BUILD_FLAG_ENABLE
     WanMgr_Rbus_SubscribeWanReady();
 
+    CcspTraceInfo(("%s:%d KAVYA ..\n",__FUNCTION__, __LINE__));
     while(wait_time <= 180)
     {
         if(wan_ready_to_go){
@@ -103,6 +104,7 @@ static void waitUntilSystemReady()
         wait_time++;
         sleep(1);
     }
+    CcspTraceInfo(("%s:%d KAVYA Wait is over..\n",__FUNCTION__, __LINE__));
 
     CcspTraceInfo(("%s %d wan_ready_to_go event recerived. \n", __FUNCTION__, __LINE__));
 #else
