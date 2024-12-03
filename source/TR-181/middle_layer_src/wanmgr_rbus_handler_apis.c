@@ -829,7 +829,7 @@ void WanMgr_Rbus_SubscribeWanReady()
     rbusError_t ret = RBUS_ERROR_SUCCESS;
     /* Adding 120 seconds as the duration of the subscription since this event is needed only at the bootup. This event will be unsubscribed after 120 seconds */
     CcspTraceInfo(("%s:%d KAVYA Set Subsc duration..\n",__FUNCTION__, __LINE__));
-    rbusEventSubscription_t subscription = {"wan_ready_to_go", NULL, 0, 0, WanMgr_Rbus_EventReceiveHandler, NULL,NULL, NULL, true};
+    rbusEventSubscription_t subscription = {"wan_ready_to_go", NULL, 1, 120, WanMgr_Rbus_EventReceiveHandler, NULL,NULL, NULL, true};
     ret = rbusEvent_SubscribeEx(rbusHandle, &subscription, 1, 60);
     if(ret != RBUS_ERROR_SUCCESS)
     {
