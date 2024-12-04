@@ -91,11 +91,12 @@ static void waitUntilSystemReady()
 {
     int wait_time = 0;
 
+    CcspTraceInfo(("%s:%d KAVYA Entered..\n",__FUNCTION__, __LINE__));
     CcspTraceInfo(("%s %d Entered \n", __FUNCTION__, __LINE__));
 #ifdef RBUS_BUILD_FLAG_ENABLE
     WanMgr_Rbus_SubscribeWanReady();
 
-    CcspTraceInfo(("%s:%d KAVYA ..\n",__FUNCTION__, __LINE__));
+    CcspTraceInfo(("%s:%d KAVYA wan_ready_to_go = [%d]..\n",__FUNCTION__, __LINE__,wan_ready_to_go));
     while(wait_time <= 180)
     {
         if(wan_ready_to_go){

@@ -631,17 +631,21 @@ ANSC_STATUS WanMgr_Rbus_getUintParamValue (char * param, UINT * value)
 
 static void WanMgr_Rbus_EventReceiveHandler(rbusHandle_t handle, rbusEvent_t const* event, rbusEventSubscription_t* subscription)
 {
+CcspTraceInfo(("%s:%d KAVYA Entered..\n",__FUNCTION__, __LINE__));
+
     (void)handle;
     (void)subscription;
 
     const char* eventName = event->name;
     int  cpeInterfaceIndex   = -1;
 
+    CcspTraceInfo(("%s:%d KAVYA..eventName = [%s]\n",__FUNCTION__, __LINE__,eventName));
     if((eventName == NULL))
     {
         CcspTraceError(("%s : FAILED , value is NULL\n",__FUNCTION__));
         return;
     }
+    CcspTraceInfo(("%s:%d KAVYA..eventName is not NULL\n",__FUNCTION__, __LINE__));
     if (strcmp(eventName, WANMGR_DEVICE_NETWORKING_MODE) == 0)
     {
         rbusValue_t valBuff = rbusObject_GetValue(event->data, NULL );
@@ -828,14 +832,17 @@ void WanMgr_Rbus_SubscribeWanReady()
 {
     rbusError_t ret = RBUS_ERROR_SUCCESS;
     /* Adding 120 seconds as the duration of the subscription since this event is needed only at the bootup. This event will be unsubscribed after 120 seconds */
-    CcspTraceInfo(("%s:%d KAVYA Set Subsc duration..\n",__FUNCTION__, __LINE__));
-    rbusEventSubscription_t subscription = {"wan_ready_to_go", NULL, 1, 120, WanMgr_Rbus_EventReceiveHandler, NULL,NULL, NULL, true};
+    CcspTraceInfo(("%s:%d KAVYA Subsciption..\n",__FUNCTION__, __LINE__));
+    rbusEventSubscription_t subscription = {"wan_ready_to_go", NULL, 0, 120, WanMgr_Rbus_EventReceiveHandler, NULL,NULL, NULL, true};
+    CcspTraceInfo(("%s:%d KAVYA Time set to 120..\n",__FUNCTION__, __LINE__));
     ret = rbusEvent_SubscribeEx(rbusHandle, &subscription, 1, 60);
     if(ret != RBUS_ERROR_SUCCESS)
     {
         CcspTraceError(("%s %d - Failed to Subscribe %s, Error=%s \n", __FUNCTION__, __LINE__, rbusError_ToString(ret), "wan_ready_to_go"));
         CcspTraceInfo(("%s:%d KAVYA Failed..\n",__FUNCTION__, __LINE__));
     }
+
+    CcspTraceInfo(("%s:%d KAVYA wan_ready_to_go subscribed..\n",__FUNCTION__, __LINE__));
     CcspTraceInfo(("%s:%d wan_ready_to_go subscribed\n",__FUNCTION__, __LINE__));
 }
 
