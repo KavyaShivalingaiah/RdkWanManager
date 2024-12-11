@@ -833,8 +833,8 @@ void WanMgr_Rbus_SubscribeWanReady()
     rbusError_t ret = RBUS_ERROR_SUCCESS;
     /* Adding 120 seconds as the duration of the subscription since this event is needed only at the bootup. This event will be unsubscribed after 120 seconds */
     CcspTraceInfo(("%s:%d KAVYA Subsciption..\n",__FUNCTION__, __LINE__));
-/*    
-    rbusEventSubscription_t subscription = {"wan_ready_to_go", NULL, 0, 120, WanMgr_Rbus_EventReceiveHandler, NULL,NULL, NULL, true};
+    
+    rbusEventSubscription_t subscription = {"wan_ready_to_go", NULL, 1, 120, WanMgr_Rbus_EventReceiveHandler, NULL,NULL, NULL, true};
     CcspTraceInfo(("%s:%d KAVYA Time set to 120..\n",__FUNCTION__, __LINE__));
     ret = rbusEvent_SubscribeEx(rbusHandle, &subscription, 1, 60);
     if(ret != RBUS_ERROR_SUCCESS)
@@ -842,13 +842,7 @@ void WanMgr_Rbus_SubscribeWanReady()
         CcspTraceError(("%s %d - Failed to Subscribe %s, Error=%s \n", __FUNCTION__, __LINE__, rbusError_ToString(ret), "wan_ready_to_go"));
         CcspTraceInfo(("%s:%d KAVYA Failed..\n",__FUNCTION__, __LINE__));
     }
-*/
-    ret = rbusEvent_Subscribe(rbusHandle, "wan_ready_to_go", WanMgr_Rbus_EventReceiveHandler, NULL, 60);
-    if(ret != RBUS_ERROR_SUCCESS)
-    {
-        CcspTraceError(("%s %d - Failed to Subscribe %s, Error=%s \n", __FUNCTION__, __LINE__, rbusError_ToString(ret), "wan_ready_to_go"));
-	CcspTraceInfo(("%s:%d KAVYA Failed..\n",__FUNCTION__, __LINE__));
-    }
+
     CcspTraceInfo(("%s:%d KAVYA wan_ready_to_go subscribed..\n",__FUNCTION__, __LINE__));
     CcspTraceInfo(("%s:%d wan_ready_to_go subscribed\n",__FUNCTION__, __LINE__));
 }
